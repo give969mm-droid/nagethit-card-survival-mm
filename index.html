@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Card Survival 2D: ကိုနေ့သစ် နှင့် ပူပူး</title>
+    <title>Card Survival 2D: ပါး နှင့် ပူး</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
@@ -58,6 +58,7 @@
             padding: 2px 8px;
             border-radius: 12px;
             font-size: 11px;
+            font-weight: bold;
         }
         .time-badge { color: #ffca28; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
         .speed-btn {
@@ -505,7 +506,7 @@
     <div class="top-bar">
         <div class="header-row">
             <div class="time-controls">
-                <span class="mc-tag">🧑 ကိုနေ့သစ်</span>
+                <span class="mc-tag" id="mcNameDisplay">🧑 ကိုနေ့သစ်</span>
                 <span class="time-badge" id="dayTimeDisplay">📅 နေ့ ၁ - 06:00 (☀️ နံနက်)</span>
                 <button class="speed-btn" id="btnSound" onclick="toggleSound()">🔊 အသံဖွင့်</button>
                 <button class="speed-btn" id="btnPause" onclick="togglePause()">⏸️ ခဏရပ်</button>
@@ -584,7 +585,7 @@
     <div class="modal-overlay" id="recipeModal">
         <div class="modal-box">
             <div class="modal-header">
-                <span>📖 ကိုနေ့သစ်၏ ကျွန်းပေါ်ရှင်သန်ရေးနှင့် Romance လမ်းညွှန်</span>
+                <span>📖 ကျွန်းပေါ်ရှင်သန်ရေးနှင့် Challenging Romance လမ်းညွှန်</span>
                 <button class="dock-btn" style="background:#c62828; padding:4px 10px;" onclick="toggleModal('recipeModal', false)">ပိတ်မည် ✕</button>
             </div>
             <div class="modal-body" id="recipeListBody"></div>
@@ -625,7 +626,7 @@
                         const len = sr * 1.5;
                         this.noiseBuffer = this.ctx.createBuffer(1, len, sr);
                         const d = this.noiseBuffer.getChannelData(0);
-                        for (let i = 0; i < length; i++) d[i] = Math.random() * 2 - 1;
+                        for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
                     }
                 }
                 if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
@@ -740,7 +741,7 @@
             loc_cliff: `<svg viewBox="0 0 64 64"><rect width="64" height="64" rx="10" fill="#90a4ae"/><polygon points="8,58 26,16 44,58" fill="#546e7a"/><polygon points="24,58 42,22 58,58" fill="#37474f"/></svg>`,
 
             pupu_char: `<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" fill="#f8bbd0"/><path d="M16 34 C14 14 50 14 48 34 L50 50 L14 50 Z" fill="#3e2723"/><circle cx="32" cy="32" r="13" fill="#ffe0b2"/><path d="M20 26 Q32 18 44 26" fill="#3e2723"/><circle cx="27" cy="32" r="1.8" fill="#3e2723"/><circle cx="37" cy="32" r="1.8" fill="#3e2723"/><path d="M29 38 Q32 41 35 38" stroke="#d81b60" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="43" cy="23" r="4" fill="#ff4081"/><circle cx="43" cy="23" r="1.5" fill="#fff59d"/><path d="M20 56 C20 46 44 46 44 56 Z" fill="#ec407a"/></svg>`,
-            family_card: `<svg viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#fce4ec"/><circle cx="20" cy="24" r="8" fill="#ffe0b2"/><path d="M12 22 Q20 14 28 22" fill="#263238"/><circle cx="44" cy="25" r="8" fill="#ffe0b2"/><path d="M36 24 C36 14 52 14 52 24 L53 36 L35 36 Z" fill="#3e2723"/><circle cx="26" cy="42" r="6" fill="#ffe0b2"/><circle cx="38" cy="42" r="6" fill="#ffe0b2"/><path d="M32 12 C34 9 38 11 32 16 C26 11 30 9 32 12 Z" fill="#e91e63"/></svg>`,
+            family_card: `<svg viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#fce4ec"/><circle cx="18" cy="24" r="7" fill="#ffe0b2"/><path d="M10 22 Q18 14 26 22" fill="#263238"/><circle cx="46" cy="24" r="7" fill="#ffe0b2"/><path d="M38 22 C38 14 54 14 54 22 L54 34 L38 34 Z" fill="#3e2723"/><circle cx="24" cy="46" r="6" fill="#ffe0b2"/><circle cx="40" cy="46" r="6" fill="#ffe0b2"/><path d="M32 12 C34 9 38 11 32 16 C26 11 30 9 32 12 Z" fill="#e91e63"/><circle cx="24" cy="46" r="3" fill="#e0f2f1"/><circle cx="40" cy="46" r="3" fill="#fff9c4"/></svg>`,
 
             shelter: `<svg viewBox="0 0 64 64"><polygon points="32,12 8,54 56,54" fill="#689f38" stroke="#33691e" stroke-width="2"/><polygon points="32,26 24,54 40,54" fill="#3e2723"/></svg>`,
             wooden_hut: `<svg viewBox="0 0 64 64"><polygon points="32,10 6,32 58,32" fill="#d84315" stroke="#4e342e" stroke-width="2"/><rect x="14" y="32" width="36" height="24" fill="#8d6e63" stroke="#4e342e" stroke-width="2"/><rect x="27" y="40" width="10" height="16" fill="#3e2723"/><rect x="18" y="38" width="6" height="6" fill="#fff59d"/><rect x="40" y="38" width="6" height="6" fill="#fff59d"/></svg>`,
@@ -763,6 +764,8 @@
             wild_flower: `<svg viewBox="0 0 64 64"><path d="M32 54 L32 30" stroke="#388e3c" stroke-width="3"/><circle cx="32" cy="22" r="6" fill="#ff4081"/><circle cx="24" cy="26" r="6" fill="#f48fb1"/><circle cx="40" cy="26" r="6" fill="#f48fb1"/><circle cx="26" cy="17" r="6" fill="#ff80ab"/><circle cx="38" cy="17" r="6" fill="#ff80ab"/><circle cx="32" cy="22" r="4" fill="#ffd54f"/></svg>`,
             flower_garland: `<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="18" fill="none" stroke="#66bb6a" stroke-width="4"/><circle cx="32" cy="14" r="5" fill="#ff4081"/><circle cx="48" cy="26" r="5" fill="#ff80ab"/><circle cx="42" cy="46" r="5" fill="#ffd54f"/><circle cx="22" cy="46" r="5" fill="#ff4081"/><circle cx="16" cy="26" r="5" fill="#f48fb1"/></svg>`,
             boar_hide: `<svg viewBox="0 0 64 64"><path d="M18 14 L46 14 L52 32 L44 50 L20 50 L12 32 Z" fill="#795548" stroke="#3e2723" stroke-width="2"/></svg>`,
+            seashell_necklace: `<svg viewBox="0 0 64 64"><ellipse cx="32" cy="34" rx="14" ry="14" fill="none" stroke="#d4a373" stroke-width="2.5"/><circle cx="32" cy="48" r="5" fill="#ff80ab"/><circle cx="21" cy="41" r="3.5" fill="#e8eaf6"/><circle cx="43" cy="41" r="3.5" fill="#e8eaf6"/><circle cx="18" cy="30" r="3" fill="#e0f7fa"/><circle cx="46" cy="30" r="3" fill="#e0f7fa"/></svg>`,
+            boar_hide_coat: `<svg viewBox="0 0 64 64"><path d="M16 12 L48 12 L52 24 L46 54 L18 54 L12 24 Z" fill="#5d4037"/><path d="M32 12 L32 54" stroke="#ffeb3b" stroke-width="2.5"/><rect x="22" y="16" width="20" height="8" fill="#d7ccc8" rx="2"/></svg>`,
 
             stone_axe: `<svg viewBox="0 0 64 64"><line x1="16" y1="52" x2="46" y2="16" stroke="#6d4c41" stroke-width="6" stroke-linecap="round"/><polygon points="34,14 52,22 44,34 30,24" fill="#90a4ae" stroke="#37474f" stroke-width="2"/></svg>`,
             spear: `<svg viewBox="0 0 64 64"><line x1="12" y1="52" x2="46" y2="18" stroke="#8d6e63" stroke-width="4" stroke-linecap="round"/><polygon points="54,10 48,24 40,16" fill="#cfd8dc"/></svg>`,
@@ -800,14 +803,14 @@
         const CARD_DB = {
             loc_shore: { name: 'သဲသောင်ပြင်', zone: 'env', loc: 'beach', desc: 'ကျောက်၊ သစ်ကိုင်း၊ ခရု ရှာရန်', actionName: 'ရှာဖွေမည် (25m)', timeCost: 25 },
             loc_sea: { name: 'ပင်လယ်အော်', zone: 'env', loc: 'beach', desc: 'လှံရှိလျှင် ငါးထိုးနိုင်သည်', actionName: 'ငါးရှာမည် (35m)', timeCost: 35 },
-            loc_trees: { name: 'အုန်းတောအုပ်', zone: 'env', loc: 'jungle', desc: 'အုန်းသီး၊ သစ်သား၊ ပူပူးကိုရှာရန်', actionName: 'ဝင်ရှာမည် (35m)', timeCost: 35 },
+            loc_trees: { name: 'အုန်းတောအုပ်', zone: 'env', loc: 'jungle', desc: 'အုန်းသီး၊ သစ်သား၊ ပူးကိုရှာရန်', actionName: 'ဝင်ရှာမည် (35m)', timeCost: 35 },
             loc_hunt: { name: 'တောနက်အမဲကွင်း', zone: 'env', loc: 'jungle', desc: 'လေး/လှံဖြင့် တောဝက်အမဲလိုက်ရန်', actionName: 'အမဲလိုက်မည် (45m)', timeCost: 45 },
             loc_swamp: { name: 'ဒီရေတော ရွှံ့အိုင်', zone: 'env', loc: 'mangrove', desc: 'ရွှံ့စေး၊ ဆေးပင်၊ ပိန်းဥ၊ ပန်းရှာရန်', actionName: 'ရှာဖွေမည် (35m)', timeCost: 35 },
             loc_cliff: { name: 'ကျောက်တောင်ပါး', zone: 'env', loc: 'highland', desc: 'မီးခတ်ကျောက်၊ ငှက်ဥရှာရန်', actionName: 'တူးဖော်မည် (35m)', timeCost: 35 },
 
             // Romance & Family Characters
             pupu_char: { name: 'ပူပူး 💖', zone: 'env', loc: 'beach', isRomance: true, desc: 'သင်္ဘောအတူပါလာခဲ့သူ', actionName: '💬 စကားပြော/ချော့မည်', timeCost: 20 },
-            family_card: { name: 'သားသားနှင့် မီးမီး', zone: 'env', loc: 'beach', isRomance: true, desc: 'မောင်နေခြည် & မပူပူးလေး 👨‍👩‍👧‍👦', actionName: '🎈 မိသားစုနှင့်ဆော့မည်', timeCost: 25 },
+            family_card: { name: 'အမွှာ သားသားနှင့်မီးမီး 👶👶', zone: 'env', loc: 'beach', isRomance: true, desc: 'မောင်မောင် နှင့် မိမိ 👨‍👩‍👧‍👦', actionName: '🎈 ကလေးများနှင့်ဆော့မည်', timeCost: 25 },
 
             shelter: { name: 'သစ်ရွက်တဲ', zone: 'env', loc: 'beach', desc: 'အိပ်စက်လျှင် အားပိုပြည့်သည်', actionName: '၁ နာရီ နားမည်', timeCost: 60 },
             wooden_hut: { name: 'သစ်သားအိမ်ကြီး', zone: 'env', loc: 'beach', desc: 'မိသားစုနေထိုင်ရန် ခိုင်ခံ့သောအိမ်', actionName: '🏡 အိမ်ထဲနားမည်', timeCost: 60 },
@@ -829,8 +832,10 @@
             clay: { name: 'ရွှံ့စေးတုံး', zone: 'inv', stackable: true },
             herbs: { name: 'ဆေးဖက်ဝင်အပင်', zone: 'inv', stackable: true },
             wild_flower: { name: 'တောပန်းရိုင်းလေး', zone: 'inv', stackable: true, desc: 'ပန်းကုံးသီ၍ ပူပူးကိုပေးနိုင်သည်' },
-            flower_garland: { name: 'မွှေးပျံ့သောပန်းကုံး', zone: 'inv', stackable: true, desc: 'ပူပူးပေါ်ဆွဲထပ်၍ လက်ဆောင်ပေးပါ' },
+            flower_garland: { name: 'မွှေးပျံ့သောပန်းကုံး 🌺', zone: 'inv', stackable: true, desc: 'အထူးချစ်ခင်မှု လက်ဆောင် (+၁၅%)' },
             boar_hide: { name: 'တောဝက်သားရေ', zone: 'inv', stackable: true },
+            seashell_necklace: { name: 'ခရုဆွဲကြိုး 📿', zone: 'inv', stackable: true, desc: 'အထူးချစ်ခင်မှု လက်ဆောင် (+၂၀%)' },
+            boar_hide_coat: { name: 'သားရေနွေးထည် 🧥', zone: 'inv', stackable: true, desc: 'အထူးချစ်ခင်မှု လက်ဆောင် (+၃၀%)' },
 
             stone_axe: { name: 'ကျောက်ပုဆိန်', zone: 'inv', maxDur: 15 },
             spear: { name: 'သစ်သားလှံ', zone: 'inv', maxDur: 12 },
@@ -841,7 +846,7 @@
             raft_sail: { name: 'ဖောင်ရွက်လွှင့်အဝတ်', zone: 'inv', stackable: true },
 
             coconut: { name: 'အုန်းသီးအလုံး', zone: 'inv', stackable: true },
-            husked_coconut: { name: 'အခွံနွှာပြီးအုန်းသီး', zone: 'inv', stackable: true },
+            husked_coconut: { name: 'အခံနွှာပြီးအုန်းသီး', zone: 'inv', stackable: true },
             open_coconut: { name: 'ဖောက်ပြီးအုန်းသီး', zone: 'inv', stackable: true, actionName: 'သောက်မည် (+30💧)', timeCost: 5 },
             coconut_meat: { name: 'အုန်းသီးဆန်ခြမ်း', zone: 'inv', stackable: true, desc: 'စားနိုင်သည် (များရင်ဝမ်းပျက်မည်)', actionName: 'စားမည် (+18🍖)', timeCost: 5 },
             coconut_shell: { name: 'အုန်းမှုတ်ခွက်', zone: 'inv', stackable: true, desc: 'မိုးရေခံနိုင်သည်' },
@@ -874,7 +879,9 @@
             { a: 'spear', b: 'rope', result: 'bow_set', sfx: 'craft', time: 30, keepA: false, keepB: false, msg: '🏹 လှံနှင့် ကြိုးပေါင်းစပ်၍ လေးနှင့်မြား ဖန်တီးလိုက်သည်!' },
             { a: 'rope', b: 'rope', result: 'woven_bag', sfx: 'craft', time: 25, keepA: false, keepB: false, msg: '👜 အုန်းဆံလွယ်အိတ် ရက်လုပ်လိုက်သည်။' },
             { a: 'branch', b: 'rope', result: 'fish_trap', sfx: 'craft', time: 25, keepA: false, keepB: false, msg: '🧺 ဝါးငါးမြှုံး ရက်လုပ်လိုက်သည်။' },
-            { a: 'wild_flower', b: 'wild_flower', result: 'flower_garland', sfx: 'love', time: 15, keepA: false, keepB: false, msg: '🌺 တောပန်းလေးများကို သီကုံး၍ မွှေးပျံ့သော ပန်းကုံးလေး ပြုလုပ်လိုက်သည်!' },
+            { a: 'wild_flower', b: 'rope', result: 'flower_garland', sfx: 'love', time: 15, keepA: false, keepB: true, dmgB: 1, msg: '🌺 တောပန်းနှင့် ကြိုးနွယ်ကို သီကုံး၍ မွှေးပျံ့သော ပန်းကုံးလေး ပြုလုပ်လိုက်သည်!' },
+            { a: 'shellfish', b: 'rope', result: 'seashell_necklace', sfx: 'craft', time: 20, keepA: false, keepB: true, dmgB: 1, msg: '📿 ခရုခွံများနှင့် ကြိုးနွယ်ကိုပေါင်းစပ်၍ ခရုဆွဲကြိုးလှလှလေး ပြုလုပ်လိုက်သည်!' },
+            { a: 'boar_hide', b: 'rope', result: 'boar_hide_coat', sfx: 'craft', time: 30, keepA: false, keepB: true, dmgB: 1, msg: '🧥 တောဝက်သားရေနှင့် ကြိုးနွယ်ကိုပေါင်းစပ်ပြီး ပူးအတွက် နွေးထွေးသော သားရေနွေးထည်လေး ချုပ်လုပ်လိုက်သည်။' },
 
             { a: 'branch', b: 'branch', result: 'fire_drill', sfx: 'chop', time: 15, keepA: false, keepB: false, msg: 'မီးပွတ်သစ်သား ပြုလုပ်လိုက်သည်။' },
             { a: 'fire_drill', b: 'fiber', result: 'campfire', sfx: 'fire', targetZone: 'env', time: 20, keepA: true, dmgA: 1, keepB: false, msg: '🔥 မီးပုံ မွှေးလိုက်နိုင်ပြီ!' },
@@ -894,13 +901,15 @@
 
             { a: 'shellfish', b: 'campfire', result: 'cooked_shellfish', sfx: 'fire', time: 10, keepA: false, keepB: true, msg: '🦪 ခရုကို ကင်လိုက်သည်။' },
             { a: 'raw_fish', b: 'campfire', result: 'cooked_fish', sfx: 'fire', time: 15, keepA: false, keepB: true, msg: '🍣 ငါးကင် ရရှိပြီ။' },
+            { a: 'raw_fish', b: 'kiln', result: 'cooked_fish', sfx: 'fire', time: 10, keepA: false, keepB: true, msg: '🍣 မီးဖိုကြီးဖြင့် ငါးကင်လိုက်သည်။' },
             { a: 'raw_meat', b: 'campfire', result: 'cooked_meat', sfx: 'fire', time: 20, keepA: false, keepB: true, msg: '🍖 တောဝက်သားကင် ရရှိပြီ။' },
+            { a: 'raw_meat', b: 'kiln', result: 'cooked_meat', sfx: 'fire', time: 15, keepA: false, keepB: true, msg: '🍖 မီးဖိုကြီးဖြင့် တောဝက်သားကင်လိုက်သည်။' },
             { a: 'taro_root', b: 'campfire', result: 'roasted_taro', sfx: 'fire', time: 15, keepA: false, keepB: true, msg: '🍠 ပိန်းဥမီးဖုတ် ရရှိပြီ။' },
             { a: 'herbs', b: 'fiber', result: 'bandage', sfx: 'craft', time: 10, keepA: false, keepB: false, msg: '🩹 ဒဏ်ရာပတ်တီး ပြုလုပ်လိုက်သည်။' },
             { a: 'herbs', b: 'water_bowl', result: 'herbal_tea', sfx: 'drink', extraResult: 'coconut_shell', time: 10, keepA: false, keepB: false, msg: '🍵 ဝမ်းပျက်/ဖျားနာပျောက် ဆေးဖက်ဝင်ပြုတ်ရည် ဖော်စပ်လိုက်သည်။' },
 
             { a: 'branch', b: 'fiber', result: 'shelter', sfx: 'craft', targetZone: 'env', time: 40, keepA: false, keepB: false, msg: '⛺ သစ်ရွက်တဲ ဆောက်လုပ်ပြီးစီးပြီ!' },
-            { a: 'log', b: 'rope', result: 'wooden_hut', sfx: 'craft', targetZone: 'env', time: 60, keepA: false, keepB: false, msg: '🏡 ပူပူးနှင့် မိသားစုအတူနေထိုင်ရန် နွေးထွေးခိုင်ခံ့သော သစ်သားအိမ်ကြီး ဆောက်လုပ်ပြီးစီးပြီ!' },
+            { a: 'log', b: 'rope', result: 'wooden_hut', sfx: 'craft', targetZone: 'env', time: 60, keepA: false, keepB: false, msg: '🏡 ပူးနှင့် အတူနေထိုင်ရန် နွေးထွေးခိုင်ခံ့သော သစ်သားအိမ်ကြီး ဆောက်လုပ်ပြီးစီးပြီ!' },
             { a: 'clay', b: 'stone', result: 'kiln', sfx: 'mine', targetZone: 'env', time: 45, keepA: false, keepB: false, msg: '🏺 ရွှံ့မီးဖိုကြီး တည်ဆောက်လိုက်ပြီ!' },
             { a: 'branch', b: 'clay', result: 'crop_plot', sfx: 'craft', targetZone: 'env', time: 30, keepA: false, keepB: false, msg: '🌱 စိုက်ခင်းဘောင် ပြုလုပ်လိုက်ပြီ!' },
 
@@ -931,6 +940,8 @@
                 affection: 0,
                 isLovers: false,
                 hasChildren: false,
+                pupuSick: false, // Feature: Pupu getting sick
+                sickDayCountdown: 0,
                 envCards: [
                     { uid: 1, id: 'loc_shore', count: 1 },
                     { uid: 2, id: 'loc_sea', count: 1 },
@@ -979,7 +990,8 @@
             document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
             document.getElementById('tab_' + loc).classList.add('active');
             advanceTime(10, false);
-            logMsg(`🚶 ၁၀ မိနစ်ခန့် လမ်းလျှောက်ပြီး နယ်မြေအသစ်သို့ ရောက်ရှိလာသည်။`);
+            let userMC = state.isLovers ? 'ပါး' : 'ကိုနေ့သစ်';
+            logMsg(`🚶 ${userMC} ၁၀ မိနစ်ခန့် လမ်းလျှောက်ပြီး နယ်မြေအသစ်သို့ ရောက်ရှိလာသည်။`);
         }
 
         // --- Balanced Survival & Time Engine ---
@@ -989,6 +1001,17 @@
                 state.minutes -= 1440;
                 state.day += 1;
                 state.coconutStreak = Math.max(0, state.coconutStreak - 2);
+
+                // Daily risk of Pupu getting sick
+                if (state.pupuFound && !state.pupuSick && Math.random() < 0.15) {
+                    triggerPupuSickEvent();
+                }
+
+                // If Pupu is sick and you ignore her, her affection drops daily
+                if (state.pupuSick) {
+                    state.affection = Math.max(0, state.affection - 10);
+                    logMsg("🥀 ပူး ဖျားနာနေသည်ကို ဂရုမစိုက်မိသဖြင့် ချစ်ခင်မှု (၁၀%) လျော့ကျသွားသည်။");
+                }
             }
 
             let isNight = state.minutes >= 1140 || state.minutes < 360;
@@ -1031,7 +1054,7 @@
                 state.cropGrowth = Math.min(100, state.cropGrowth + (mins * rate));
             }
 
-            if (mins >= 15 && Math.random() < 0.16) {
+            if (mins >= 15 && Math.random() < 0.12) {
                 state.weather = state.weather === 'sunny' ? 'rainy' : 'sunny';
                 if (state.weather === 'rainy') {
                     SoundFX.play('thunder');
@@ -1064,13 +1087,19 @@
             if (state.water <= 0 || state.food <= 0) state.health = Math.max(0, state.health - (mins * 0.12));
             if (state.sanity <= 0) state.health = Math.max(0, state.health - (mins * 0.05));
 
+            // Twins Milestone logic: Lovers, Affection=100%, Has wooden_hut
             if (state.pupuFound && state.isLovers && state.affection >= 100 && !state.hasChildren && state.envCards.some(c => c.id === 'wooden_hut')) {
                 triggerFamilyMilestone();
             }
 
+            // Casual event: Predator attack
+            if (state.day > 2 && Math.random() < 0.01) {
+                triggerPredatorAttack();
+            }
+
             if (state.health <= 0) {
                 SoundFX.play('hurt');
-                alert(`💀 ကိုနေ့သစ်သည် ကျွန်းပေါ်တွင် (${state.day}) ရက်မြောက်နေ့၌ အားအင်ကုန်ခမ်းသွားပါသည်။ ဂိမ်းအသစ် ပြန်လည်စတင်ပါမည်။`);
+                alert(`💀 ပါး (ကိုနေ့သစ်) သည် ကျွန်းပေါ်တွင် (${state.day}) ရက်မြောက်နေ့၌ အားအင်ကုန်ခမ်းသွားပါသည်။ ဂိမ်းအသစ် ပြန်လည်စတင်ပါမည်။`);
                 resetGame();
                 return;
             }
@@ -1131,52 +1160,135 @@
             );
         }
 
+        function triggerPupuSickEvent() {
+            state.pupuSick = true;
+            SoundFX.play('hurt');
+            let pupuName = state.isLovers ? 'ပူး' : 'ပူပူး';
+            let mcName = state.isLovers ? 'ပါး' : 'ကိုနေ့သစ်';
+            openStoryModal(
+                `🤒 ${pupuName} ဖျားနာနေသည်!`,
+                ART_SVG.pupu_char,
+                `<p>ရာသီဥတုဒဏ်နှင့် ပင်ပန်းမှုကြောင့် <strong>${pupuName}</strong> တစ်ကိုယ်လုံး ပူကျစ်ပြီး အဖျားတက်နေရှာပါတယ်။</p>
+                <p><strong>${pupuName}:</strong> "${mcName}... ငါ အရမ်းချမ်းပြီး ခေါင်းတွေ ကိုက်နေတယ်..."</p>
+                <p style="color:#ff1744;">⚠️ <strong>ပူး သည် ဖျားနာနေပါသည်။</strong> မည်သည့် Romance ကတ်စကားပြောခြင်းမျှ လုပ်၍မရတော့ပါ။ ၎င်းအား <strong>ဆေးဖက်ဝင်ပြုတ်ရည် (🍵)</strong> သို့မဟုတ် <strong>သားရေနွေးထည် (🧥)</strong> လက်ဆောင်ပေးပြီး ချက်ချင်းကုသပေးပါ။ (ဂရုမစိုက်ပါက နေ့စဉ် အချစ် % များစွာ လျော့ကျပါမည်။)</p>`,
+                [{ label: '😟 ပူးကို ဂရုတစိုက် မီးပုံနွေးနွေးနားမှာ သိပ်ထားမည်', action: () => {} }]
+            );
+        }
+
+        function triggerPredatorAttack() {
+            SoundFX.play('thunder');
+            let pupuName = state.isLovers ? 'ပူး' : 'ပူပူး';
+            let mcName = state.isLovers ? 'ပါး' : 'ကိုနေ့သစ်';
+            let hasWeapon = state.invCards.some(c => c.id === 'spear' || c.id === 'bow_set' || c.id === 'stone_axe');
+            let desc = `<p>စူးရှလှသော အော်သံတစ်ခုနှင့်အတူ တောနက်ထဲမှ <strong>တောဝက်ရိုင်းကြီး 🐗</strong> တစ်ကောင်သည် ကမ်းခြေစခန်းရှိ <strong>${pupuName}</strong> ဆီသို့ ဦးတည်ပြေးဝင်လာပါတော့သည်။!</p>
+            <p><strong>${pupuName}:</strong> "${mcName} ကယ်ပါဦး!!! တောဝက်ကြီး ပြေးလာနေတယ်!"</p>`;
+
+            let choices = [];
+            if (hasWeapon) {
+                choices.push({
+                    label: `⚔️ လက်နက်ဖြင့် တောဝက်ကို အမြန်ခုခံတိုက်ခိုက်မည် (အောင်မြင်နှုန်း မြင့်မား)`,
+                    pink: true,
+                    action: () => {
+                        SoundFX.play('chop');
+                        let spear = state.invCards.find(c => c.id === 'spear');
+                        let bow = state.invCards.find(c => c.id === 'bow_set');
+                        if (spear) damageCard(spear.uid, 2);
+                        else if (bow) damageCard(bow.uid, 2);
+
+                        state.affection = Math.min(100, state.affection + 20);
+                        addInvCard('raw_meat', 1);
+                        addInvCard('boar_hide', 1);
+                        openStoryModal(
+                            `🏆 တောဝက်ကို အောင်မြင်စွာ တိုက်ထုတ်နိုင်ခဲ့သည်!`,
+                            ART_SVG.spear,
+                            `<p><strong>${mcName}</strong> သည် ရဲရင့်စွာဖြင့် လက်နက်စွဲကိုင်ကာ တောဝက်ဆိုးကြီးကို ခုခံတိုက်ခိုက်ခဲ့သဖြင့် ဝက်ရိုင်းကြီး သေဆုံးသွားကာ အသားနှင့် သားရေ ရရှိခဲ့သည်။</p>
+                            <p><strong>${pupuName}:</strong> "မင်းသာ မရှိရင် ငါ့ကို ကိုက်သွားတော့မှာ... ငါ့ကို ကာကွယ်ပေးလို့ တကယ်ကျေးဇူးတင်ပါတယ် <strong>${mcName}</strong> ရယ်..."</p>
+                            <p style="color:#00e676;">💖 ${pupuName} ၏ သင့်အပေါ် ယုံကြည်ကိုးစားမှုနှင့် ချစ်ခင်မှု (၂၀%) တိုးတက်လာပါသည်။</p>`,
+                            [{ label: '💪 အားလုံး ဘေးကင်းသွားပြီ', action: () => {} }]
+                        );
+                    }
+                });
+            }
+
+            choices.push({
+                label: `🏃 ကိုယ်ခန္ဓာဖြင့် ကာကွယ်ပြီး မောင်းထုတ်မည် (ဒဏ်ရာရနိုင်ချေရှိ)`,
+                action: () => {
+                    if (Math.random() < 0.4) {
+                        state.health = Math.max(15, state.health - 25);
+                        state.bleeding = true;
+                        SoundFX.play('hurt');
+                        triggerShake();
+                        openStoryModal(
+                            `🤕 ခုခံရင်း ဒဏ်ရာရရှိသွားသည်!`,
+                            null,
+                            `<p><strong>${mcName}</strong> သည် လက်နက်မရှိဘဲ တောဝက်ကို မောင်းထုတ်ရန် ကြိုးစားခဲ့ရာ ဝက်ရိုင်းက ပြန်လည်တိုက်ခိုက်သဖြင့် သွေးထွက်ဒဏ်ရာ ရရှိသွားသည်။ သို့သော် ဝက်ရိုင်းကိုတော့ မောင်းထုတ်နိုင်ခဲ့သည်။</p>
+                            <p><strong>${pupuName}:</strong> "ပါး!! သွေးတွေထွက်ကုန်ပြီ... ငါ့ကိုကာကွယ်ပေးရင်း ဒဏ်ရာရသွားတာ... စိတ်မကောင်းလိုက်တာ..."</p>
+                            <p style="color:#d32f2f;">🩹 သင့်ကျန်းမာရေး လျော့ကျပြီး သွေးထွက်နေပါသဖြင့် ဆေးမြစ်ပတ်တီး အမြန်စည်းပါ။</p>`,
+                            [{ label: '😢 ဒဏ်ရာကိစ္စမရှိ၊ ပူး ဘေးကင်းဖို့ပဲ အရေးကြီးတယ်', action: () => {} }]
+                        );
+                    } else {
+                        state.affection = Math.min(100, state.affection + 10);
+                        openStoryModal(
+                            `🏃 မောင်းထုတ်နိုင်ခဲ့သည်!`,
+                            null,
+                            `<p>ကံကောင်းထောက်မစွာဖြင့် <strong>${mcName}</strong> သည် ဆူညံသံများပြုလုပ်ကာ ဝက်ရိုင်းကို ဒဏ်ရာမရဘဲ အဝေးသို့ ခြောက်လှန့်မောင်းထုတ်နိုင်ခဲ့သည်။</p>
+                            <p><strong>${pupuName}</strong> က သင့်ကို တုန်တုန်ရင်ရင်ဖြင့် ပြေးဖက်လိုက်ပါတော့သည်။</p>`,
+                            [{ label: '😌 ဘာမှမဖြစ်လို့ တော်သေးတာပေါ့', action: () => {} }]
+                        );
+                    }
+                }
+            });
+
+            openStoryModal(`🚨 အန္တရာယ်ဖြစ်ရပ်: စခန်းကို တောဝက်ရိုင်း တိုက်ခိုက်ခြင်း!`, ART_SVG.loc_hunt, desc, choices);
+        }
+
         function interactWithPuPu(px, py) {
+            if (state.pupuSick) {
+                SoundFX.play('hurt');
+                logMsg(`🤒 ပူး ဖျားနာနေသဖြင့် စကားမပြောနိုင်ပါ။ ဆေးဖက်ဝင်ပြုတ်ရည် (🍵) သို့မဟုတ် သားရေနွေးထည် (🧥) ပေးပါ။`);
+                return;
+            }
+
             SoundFX.play('love');
-            let gain = 8;
+            let gain = 3; // Basic talk affection gains are very low to make it challenging
             let dialogue = "";
+            let pName = state.isLovers ? "ပူး" : "ပူပူး";
+            let mName = state.isLovers ? "ပါး" : "ကိုနေ့သစ်";
 
             if (state.affection < 30) {
-                const talks = [
-                    `<strong>ပူပူး:</strong> "ကိုနေ့သစ် နင်တစ်ယောက်တည်း ကျွန်းပေါ်မှာ ဘယ်လိုများ အသက်ရှင်နေခဲ့တာလဲ? နင်က တကယ်တော်တာပဲနော်..."`,
-                    `<strong>ပူပူး:</strong> "ညဘက်ဆို ငါအရမ်းကြောက်တာပဲ ကိုနေ့သစ်ရယ်... နင်အနားမှာ ရှိနေပေးလို့ တော်သေးတာပေါ့။"`
-                ];
-                dialogue = talks[Math.floor(Math.random() * talks.length)];
+                dialogue = `<strong>${pName}:</strong> "${mName} နင်တစ်ယောက်တည်း ကျွန်းပေါ်မှာ ဘယ်လိုများ အသက်ရှင်နေခဲ့တာလဲ? နင်က တကယ်တော်တာပဲနော်..."`;
             } else if (state.affection < 70) {
-                gain = 10;
-                const talks = [
-                    `<strong>ပူပူး:</strong> "ကိုနေ့သစ်... ဒီရက်ပိုင်း နင်ငါ့ကို အရမ်းဂရုစိုက်ပေးတာ ငါသိပါတယ်။ နင့်အနားမှာ နေရတာ ငါ့ရင်တွေ အရမ်းခုန်နေသလိုပဲ..."`,
-                    `<strong>ပူပူး:</strong> "ငါလည်း နင့်ကို ကူညီချင်လို့ ကမ်းခြေက အုန်းသီးနဲ့ အုန်းဆံမျှင်လေးတွေ ကောက်ထားပေးတယ် သိလား!"`
-                ];
-                dialogue = talks[Math.floor(Math.random() * talks.length)];
+                gain = 4;
+                dialogue = `<strong>${pName}:</strong> "${mName}... ဒီရက်ပိုင်း နင်ငါ့ကို အရမ်းဂရုစိုက်ပေးတာ ငါသိပါတယ်။ နင့်အနားမှာ နေရတာ ငါ့ရင်တွေ အရမ်းခုန်နေသလိုပဲ..."`;
                 addInvCard('coconut', 1);
-                addInvCard('fiber', 1);
             } else if (!state.isLovers) {
                 state.isLovers = true;
                 state.affection = Math.min(100, state.affection + 15);
                 openStoryModal(
-                    '💘 နှလုံးသားချင်း နီးစပ်သွားသည့် ညနေခင်း',
+                    '💘 နှလုံးသားချင်း နီးစပ်သွားသည့် ညနေခင်း (ပူး နှင့် ပါး အခေါ်အဝေါ်ပြောင်းလဲခြင်း)',
                     ART_SVG.pupu_char,
                     `<p>နေဝင်ဆည်းဆာ ကမ်းခြေလေးမှာ <strong>ကိုနေ့သစ်</strong> နဲ့ <strong>ပူပူး</strong> တို့ ဘေးချင်းကပ် ထိုင်နေကြပါတယ်။</p>
-                    <p><strong>ပူပူး:</strong> "ကိုနေ့သစ်... အရင်ကတော့ ဒီကျွန်းပေါ်ရောက်တာ ကံဆိုးတယ်လို့ ထင်ခဲ့မိတယ်။ ဒါပေမဲ့ အခုတော့ နင်နဲ့ အခုလို နီးနီးကပ်ကပ် ရှိခွင့်ရလို့ ငါပျော်မိတယ်... <strong>ငါ နင့်ကို ချစ်တယ် ကိုနေ့သစ်!</strong>"</p>
-                    <p><strong>ကိုနေ့သစ်:</strong> "ကိုယ်လည်း ပူပူးကို အရမ်းချစ်ပါတယ်။ ဘယ်လိုအခက်အခဲပဲရှိရှိ ကိုယ်တို့ ဘဝတစ်ခု အတူတူ ထူထောင်ကြမယ်နော်!"</p>
-                    <p style="color:#ff80ab;">💑 <strong>ကိုနေ့သစ် နှင့် ပူပူး တို့ ချစ်သူစုံတွဲ ဖြစ်သွားကြပါပြီ!</strong> (သစ်လုံးကြီး + နွယ်ကြိုးခွေ ပေါင်းစပ်၍ <strong>သစ်သားအိမ်ကြီး 🏡</strong> ဆောက်လုပ်ပြီး ချစ်ခင်မှု 100% ပြည့်အောင် ကြိုးစားပါ)</p>`,
-                    [{ label: '💖 ပူပူးကို နွေးထွေးစွာ ပွေ့ဖက်လိုက်မည်', pink: true, action: () => { updateUI(); } }]
+                    <p><strong>ပူပူး:</strong> "ကိုနေ့သစ်... အရင်ကတော့ ဒီကျွန်းပေါ်ရောက်တာ ကံဆိုးတယ်လို့ ထင်ခဲ့မိတယ်။ ဒါပေမဲ့ အခုတော့ နင်နဲ့ အခုလို နီးနီးကပ်ကပ် ရှိခွင့်ရလို့ ငါပျော်မိတယ်..."</p>
+                    <p><strong>ပူပူး:</strong> "ကိုယ့်ကိုကိုယ် <strong>'ပါး'</strong> လို့ ခေါ်ပါတော့လား... ငါ့ကိုလည်း <strong>'ပူး'</strong> လို့ပဲ ခေါ်တော့နော်။ <strong>ငါ့ ပါးကို အရမ်းချစ်တယ်!</strong>"</p>
+                    <p><strong>ပါး:</strong> "ကိုယ်လည်း ပူးကို အရမ်းချစ်ပါတယ်။ ဘယ်လိုအခက်အနေပဲရှိရှိ ကိုယ်တို့ အတူတူ ရင်ဆိုင်ပြီး ဘဝတစ်ခု အတူတူ ထူထောင်ကြမယ်နော်!"</p>
+                    <p style="color:#ff80ab;">💑 <strong>ကိုနေ့သစ် နှင့် ပူပူး တို့ ချစ်သူစုံတွဲ ဖြစ်သွားကြပါပြီ!</strong> တစ်ဦးနှင့်တစ်ဦး <strong>"ပါး"</strong> နှင့် <strong>"ပူး"</strong> ဟု ခေါ်ဝေါ်သွားကြပါမည်။ (သစ်လုံးကြီး + နွယ်ကြိုးခွေ ပေါင်းစပ်၍ <strong>သစ်သားအိမ်ကြီး 🏡</strong> ဆောက်လုပ်ကာ ချစ်ခင်မှု 100% ပြည့်အောင် ကြိုးစားပါ)</p>`,
+                    [{ label: '💖 ပူးလေးကို နွေးထွေးစွာ ပွေ့ဖက်လိုက်မည်', pink: true, action: () => { updateUI(); } }]
                 );
                 advanceTime(20, false);
                 return;
             } else {
-                gain = 10;
-                dialogue = `<strong>ပူပူး:</strong> "ချစ်တယ် ကိုနေ့သစ်... နင်နဲ့အတူ ရှိနေရင် ဒီကျွန်းလေးက ကမ္ဘာပေါ်မှာ အလှဆုံးနေရာလေးပါပဲ။"`;
+                gain = 5;
+                dialogue = `<strong>${pName}:</strong> "ပါး... နိုးလာရင် ပါးမျက်နှာလေးကိုပဲ အမြဲမြင်ချင်တာ။ ဒီကျွန်းလေးမှာပဲ ထာဝရ နေသွားချင်တော့တယ်..."`;
             }
 
             state.affection = Math.min(100, state.affection + gain);
-            state.sanity = Math.min(100, state.sanity + 15);
+            state.sanity = Math.min(100, state.sanity + 12);
             showFloatText(`+${gain}% 💖 ချစ်ခင်မှု`, '#ff4081', px, py);
             openStoryModal(
-                `💖 ပူပူးနှင့် အတူရှိချိန် (ချစ်ခင်မှု: ${state.affection}%)`,
+                `💖 ပူးနှင့် အတူရှိချိန် (ချစ်ခင်မှု: ${state.affection}%)`,
                 ART_SVG.pupu_char,
-                `<p>${dialogue}</p><p style="color:#81c784;">💡 အကြံပြုချက်: ချက်ပြုတ်ပြီးသား အစားအစာများ သို့မဟုတ် <strong>မွှေးပျံ့သောပန်းကုံး (🌺)</strong> ကို ပူပူးကတ်ပေါ် ဆွဲထပ်ပေးပါက ချစ်ခင်မှု ပိုမိုလျင်မြန်စွာ တိုးတက်ပါမည်!</p>`,
+                `<p>${dialogue}</p>
+                <p style="color:#ff4081;">🎯 <strong>ပူး နှစ်သက်သော အထူးလက်ဆောင်များ စမ်းသပ်ပေးပါ:</strong> 🌺 ပန်းကုံး၊ 📿 ခရုဆွဲကြိုး၊ 🧥 သားရေနွေးထည်၊ 🍵 ဆေးရည် သို့မဟုတ် ငါး/ဝက်သားကင်များ။ (စကားပြောရုံသက်သက်ဖြင့် အချစ် % တက်ရန် အလွန်ခက်ခဲပါသည်)</p>`,
                 [{ label: '😊 ဆက်လက်ကစားမည်', pink: true, action: () => {} }]
             );
             advanceTime(20, false);
@@ -1187,13 +1299,13 @@
             addEnvCard('family_card');
             SoundFX.play('victory');
             openStoryModal(
-                '👨‍👩‍👧‍👦 ပျော်ရွှင်စရာ မိသားစုကမ္ဘာလေး စတင်ခြင်း!',
+                '👶👶 ချစ်စရာကောင်းသော အမွှာ သားသားနှင့် မီးမီး တို့ မွေးဖွားလာခြင်း!',
                 ART_SVG.family_card,
-                `<p>သစ်သားအိမ်ကြီးထဲမှာ <strong>ကိုနေ့သစ်</strong> နဲ့ <strong>ပူပူး</strong> တို့ရဲ့ အချစ်တွေ အသီးအပွင့် ဖြစ်ထွန်းလာခဲ့ပါပြီ!</p>
-                <p>ချစ်စရာကောင်းတဲ့ သားသားလေး <strong>"မောင်နေခြည်"</strong> နဲ့ မီးမီးလေး <strong>"မပူပူးလေး"</strong> တို့ မွေးဖွားလာခဲ့ပြီး ကမ်းခြေစခန်းလေးဟာ ရယ်မောသံတွေနဲ့ ပြည့်နှက်သွားပါတော့တယ်။</p>
-                <p><strong>ပူပူး:</strong> "ကိုနေ့သစ် ကြည့်ပါဦး... သားလေးနဲ့ သမီးလေးက နင်နဲ့ တစ်ပုံစံတည်းပဲနော်!"</p>
+                `<p>သစ်သားအိမ်ကြီးထဲမှာ <strong>ပါး (ကိုနေ့သစ်)</strong> နဲ့ <strong>ပူး (ပူပူး)</strong> တို့ရဲ့ အချစ်တွေ အသီးအပွင့် ဖြစ်ထွန်းလာခဲ့ပါပြီ!</p>
+                <p>အလွန်ချစ်စရာကောင်းတဲ့ အမွှာလေးတွေဖြစ်တဲ့ <strong>"သားသား"</strong> နဲ့ <strong>"မီးမီး"</strong> တို့ 👶👶 မွေးဖွားလာခဲ့ပြီး ကမ်းခြေစခန်းလေးဟာ ရယ်မောသံတွေနဲ့ ပြည့်နှက်သွားပါတော့သည်။</p>
+                <p><strong>ပူး:</strong> "ပါး... ကြည့်ပါဦး။ သားသားလေးနဲ့ မီးမီးလေး အမွှာလေးတွေက ပါးနဲ့ တစ်ပုံစံတည်းပဲနော်... ဘယ်လောက်ချစ်ဖို့ကောင်းလဲဟင်..."</p>
                 <p style="color:#ffd54f;">✨ ယခုအခါ <strong>ပင်လယ်ကူးဖောင်ကြီး (⛵)</strong> တည်ဆောက်ပြီးပါက မိသားစုလိုက် မြို့ပြသို့ ပြန်လည်လွတ်မြောက်မည်လား၊ သို့မဟုတ် ဒီကျွန်းကမ္ဘာလေးမှာပဲ ထာဝရ အခြေချနေထိုင်သွားမည်လား ရွေးချယ်နိုင်ပါပြီ!</p>`,
-                [{ label: '❤️ မိသားစုလေးကို ကြင်နာစွာ နမ်းရှိုက်လိုက်မည်', pink: true, action: () => { updateUI(); } }]
+                [{ label: '👶👶 မိသားစုလေးကို ကြင်နာစွာ နမ်းရှိုက်လိုက်မည်', pink: true, action: () => { updateUI(); } }]
             );
         }
 
@@ -1202,18 +1314,18 @@
             const hasPuPu = state.pupuFound;
             const hasFamily = state.hasChildren;
 
-            let desc = `<p><strong>ကိုနေ့သစ်</strong> သည် ကြံ့ခိုင်လှသော <strong>ပင်လယ်ကူးဖောင်ကြီး (⛵)</strong> ကို အောင်မြင်စွာ တည်ဆောက်ပြီးစီးသွားပါပြီ!</p>`;
+            let desc = `<p><strong>ပါး</strong> သည် ကြံ့ခိုင်လှသော <strong>ပင်လယ်ကူးဖောင်ကြီး (⛵)</strong> ကို အောင်မြင်စွာ တည်ဆောက်ပြီးစီးသွားပါပြီ!</p>`;
             let choices = [];
 
             if (hasFamily) {
-                desc += `<p><strong>ပူပူး:</strong> "ကိုနေ့သစ်... ဖောင်ကြီးလည်း ပြီးသွားပြီနော်။ ငါတို့ သားသားမီးမီးလေးတွေကို ခေါ်ပြီး မြို့ပြဆီ ပြန်ကြမလား... ဒါမှမဟုတ် အေးချမ်းလှပတဲ့ ဒီမိသားစုကျွန်းကမ္ဘာလေးမှာပဲ ထာဝရ အခြေချနေထိုင်သွားကြမလားဟင်?"</p>`;
+                desc += `<p><strong>ပူး:</strong> "ပါး... ဖောင်ကြီးလည်း ပြီးသွားပြီနော်။ ပါးနဲ့အတူ သားသား မီးမီး အမွှာလေးတွေကိုခေါ်ပြီး မြို့ပြဆီ ပြန်ကြမလား... ဒါမှမဟုတ် အေးချမ်းလှပတဲ့ ဒီမိသားစုကျွန်းကမ္ဘာလေးမှာပဲ ထာဝရ အခြေချနေထိုင်သွားကြမလားဟင်?"</p>`;
                 choices = [
                     {
-                        label: '⛵ ဇာတ်သိမ်း (၁): မိသားစုလိုက် ဖောင်ကြီးဖြင့် မြို့ပြသို့ ပြန်လည်လွတ်မြောက်မည်',
+                        label: '⛵ ဇာတ်သိမ်း (၁): အမွှာသားသားမီးမီးတို့နှင့်အတူ ဖောင်ကြီးဖြင့် မြို့ပြသို့ ပြန်လည်လွတ်မြောက်မည်',
                         action: () => showFinalEnding(
                             '🏆 ဇာတ်သိမ်း (၁) - ပင်လယ်ပြင်ကို ဖြတ်ကျော်၍ မိသားစုဘဝသစ်ဆီသို့!',
                             ART_SVG.escape_raft,
-                            `<p><strong>ကိုနေ့သစ်၊ ပူပူး နှင့် သားသား မောင်နေခြည်၊ မီးမီး မပူပူးလေး</strong> တို့သည် ပင်လယ်ကူးဖောင်ကြီးဖြင့် ရွက်လွှင့်ထွက်ခွာခဲ့ကြရာ ၃ ရက်အကြာတွင် ကုန်တင်သင်္ဘောကြီးတစ်စီးနှင့် တွေ့ဆုံကယ်ဆယ်ခြင်း ခံခဲ့ရပါသည်။</p>
+                            `<p><strong>ပါး၊ ပူး နှင့် အမွှာ သားသား၊ မီးမီး</strong> တို့သည် ပင်လယ်ကူးဖောင်ကြီးဖြင့် ရွက်လွှင့်ထွက်ခွာခဲ့ကြရာ ၃ ရက်အကြာတွင် ကုန်တင်သင်္ဘောကြီးတစ်စီးနှင့် တွေ့ဆုံကယ်ဆယ်ခြင်း ခံခဲ့ရပါသည်။</p>
                             <p>လူသူမဲ့ကျွန်းပေါ်တွင် အတူတကွ ရင်ဆိုင်ကျော်ဖြတ်ခဲ့ကြသော အချစ်စစ်ဖြင့် မြို့ပြတွင် ပျော်ရွှင်ချမ်းမြေ့သော မိသားစုဘဝသစ်ကို ထာဝရ တည်ဆောက်သွားကြပါတော့သည်။</p>
                             <p style="color:#ffca28;"><strong>(စုစုပေါင်း ရှင်သန်ခဲ့သည့်ရက်: ${state.day} ရက် | True Escape Family Ending)</strong></p>`
                         )
@@ -1222,23 +1334,23 @@
                         label: '🏝️ ဇာတ်သိမ်း (၂): ကျွန်းကမ္ဘာလေးတွင် မိသားစုနှင့်အတူ ထာဝရ အခြေချနေထိုင်မည်',
                         pink: true,
                         action: () => showFinalEnding(
-                            '💖 ဇာတ်သိမ်း (၂) - ကိုနေ့သစ်နှင့် ပူပူးတို့၏ ထာဝရ ကျွန်းနိဗ္ဗာန်ဘုံ!',
+                            '💖 ဇာတ်သိမ်း (၂) - ပါးနှင့် ပူးတို့၏ ထာဝရ ကျွန်းနိဗ္ဗာန်ဘုံ!',
                             ART_SVG.family_card,
-                            `<p><strong>ကိုနေ့သစ်:</strong> "မြို့ပြရဲ့ မွန်းကျပ်မှုတွေဆီ မပြန်တော့ဘူး ပူပူး... ကိုယ်တို့ ချွေးစက်တွေနဲ့ တည်ဆောက်ထားတဲ့ ဒီသစ်သားအိမ်လေး၊ စိုက်ခင်းလေးနဲ့ ကိုယ်တို့ရဲ့ မိသားစုကမ္ဘာလေးမှာပဲ ထာဝရ အခြေချနေထိုင်ကြရအောင်!"</p>
-                            <p>ပူပူးက ပျော်ရွှင်စွာ ခေါင်းညိတ်လိုက်ပြီး သားသားလေး နေခြည်နှင့် မီးမီးလေး ပူပူးလေးတို့နှင့်အတူ နေဝင်ဆည်းဆာ ကမ်းခြေလေးတွင် ထာဝရ ပျော်ရွှင်စွာ နေထိုင်သွားကြပါတော့သည်။</p>
+                            `<p><strong>ပါး:</strong> "မြို့ပြရဲ့ မွန်းကျပ်မှုတွေဆီ မပြန်တော့ဘူး ပူး... ကိုယ်တို့ ချွေးစက်တွေနဲ့ တည်ဆောက်ထားတဲ့ ဒီသစ်သားအိမ်လေး၊ စိုက်ခင်းလေးနဲ့ ကိုယ်တို့ရဲ့ မိသားစုကမ္ဘာလေးမှာပဲ ထာဝရ အခြေချနေထိုင်ကြရအောင်!"</p>
+                            <p>ပူးက ပျော်ရွှင်စွာ ခေါင်းညိတ်လိုက်ပြီး အမွှာ သားသားနှင့် မီးမီးတို့နှင့်အတူ နေဝင်ဆည်းဆာ ကမ်းခြေလေးတွင် ထာဝရ ပျော်ရွှင်စွာ နေထိုင်သွားကြပါတော့သည်။</p>
                             <p style="color:#ff80ab;"><strong>(စုစုပေါင်း ရှင်သန်ခဲ့သည့်ရက်: ${state.day} ရက် | True Island Paradise Ending)</strong></p>`
                         )
                     }
                 ];
             } else if (hasPuPu) {
-                desc += `<p><strong>ပူပူး:</strong> "ကိုနေ့သစ်... ငါတို့ ဖောင်ကြီးနဲ့ အခုပဲ လွတ်မြောက်အောင် ထွက်ခွာကြမလား? ဒါမှမဟုတ် ဒီကျွန်းလေးမှာပဲ အိမ်လေးဆောက်ပြီး ငါတို့နှစ်ယောက် အတူတူ အခြေချကြမလား?"</p>`;
+                desc += `<p><strong>ပူး:</strong> "ပါး... ငါတို့ ဖောင်ကြီးနဲ့ အခုပဲ လွတ်မြောက်အောင် ထွက်ခွာကြမလား? ဒါမှမဟုတ် ဒီကျွန်းလေးမှာပဲ အိမ်လေးဆောက်ပြီး ငါတို့နှစ်ယောက် အတူတူ အခြေချကြမလား?"</p>`;
                 choices = [
                     {
-                        label: '⛵ ဇာတ်သိမ်း (၁): ပူပူးနှင့်အတူ ဖောင်ကြီးဖြင့် မြို့ပြသို့ ပြန်လည်လွတ်မြောက်မည်',
+                        label: '⛵ ဇာတ်သိမ်း (၁): ပူးနှင့်အတူ ဖောင်ကြီးဖြင့် မြို့ပြသို့ ပြန်လည်လွတ်မြောက်မည်',
                         action: () => showFinalEnding(
                             '🏆 ဇာတ်သိမ်း - ချစ်သူနှင့်အတူ လွတ်မြောက်ခြင်း!',
                             ART_SVG.escape_raft,
-                            `<p><strong>ကိုနေ့သစ် နှင့် ပူပူး</strong> တို့သည် ပင်လယ်ကူးဖောင်ကြီးဖြင့် ကျွန်းပေါ်မှ အောင်မြင်စွာ လွတ်မြောက်ခဲ့ကြပြီး မြို့ပြသို့ ပြန်လည်ရောက်ရှိကာ ပျော်ရွှင်စွာ လက်ထပ်ပေါင်းသင်းသွားကြပါတော့သည်။</p>`
+                            `<p><strong>ပါး နှင့် ပူး</strong> တို့သည် ပင်လယ်ကူးဖောင်ကြီးဖြင့် ကျွန်းပေါ်မှ အောင်မြင်စွာ လွတ်မြောက်ခဲ့ကြပြီး မြို့ပြသို့ ပြန်လည်ရောက်ရှိကာ ပျော်ရွှင်စွာ လက်ထပ်ပေါင်းသင်းသွားကြပါတော့သည်။</p>`
                         )
                     },
                     {
@@ -1248,7 +1360,7 @@
                     }
                 ];
             } else {
-                desc += `<p>ကိုနေ့သစ် တစ်ယောက်တည်း ကျွန်းပေါ်မှ ထွက်ခွာနိုင်ပြီ ဖြစ်သော်လည်း အုန်းတောအုပ်ထဲတွင် <strong>ပူပူး</strong> ကျန်ရှိနေနိုင်ပါသေးသည်!</p>`;
+                desc += `<p>ပါး (ကိုနေ့သစ်) တစ်ကိုယ်တော် ကျွန်းပေါ်မှ ထွက်ခွာနိုင်ပြီ ဖြစ်သော်လည်း အုန်းတောအုပ်ထဲတွင် <strong>ပူပူး</strong> ကျန်ရှိနေနိုင်ပါသေးသည်!</p>`;
                 choices = [
                     {
                         label: '⛵ တစ်ယောက်တည်း ဖောင်ဖြင့် ထွက်ခွာမည် (Solo Ending)',
@@ -1303,8 +1415,8 @@
                 SoundFX.play('love');
                 state.sanity = 100;
                 state.energy = Math.min(100, state.energy + 15);
-                showFloatText('+စိတ်အေးချမ်း 👨‍👩‍👧‍👦', '#ff80ab', px, py);
-                logMsg("👨‍👩‍👧‍👦 ကိုနေ့သစ်၊ ပူပူး နှင့် သားသား မောင်နေခြည်၊ မီးမီး မပူပူးလေးတို့ ပျော်ရွှင်စွာ ဆော့ကစားနေကြသည်။");
+                showFloatText('+စိတ်အေးချမ်း 👶👶', '#ff80ab', px, py);
+                logMsg("👶👶 ပါး၊ ပူး နှင့် အမွှာ သားသားလေး၊ မီးမီးလေးတို့ ပျော်ရွှင်စွာ ဆော့ကစားနေကြသည်။");
                 advanceTime(info.timeCost, false);
                 return;
             }
@@ -1533,7 +1645,8 @@
                 state.sanity = Math.min(100, state.sanity + 8);
                 showFloatText(`+${gains[card.id]}🍖 +6❤️`, '#81c784', px, py);
                 removeCardAmount(card.uid, 1);
-                logMsg(`🍖 [${info.name}] ကို အရသာရှိစွာ စားသုံးလိုက်သည်။`);
+                let mcName = state.isLovers ? 'ပါး' : 'ကိုနေ့သစ်';
+                logMsg(`🍖 [${info.name}] ကို ${mcName} အရသာရှိစွာ စားသုံးလိုက်သည်။`);
                 advanceTime(info.timeCost, false);
             }
             else if (card.id === 'bandage') {
@@ -1542,7 +1655,8 @@
                 state.health = Math.min(100, state.health + 25);
                 showFloatText('+25❤️ ဒဏ်ရာပျောက်!', '#81c784', px, py);
                 removeCardAmount(card.uid, 1);
-                logMsg("🩹 ဆေးမြစ်ပတ်တီး စည်းလိုက်သဖြင့် သွေးထွက်ဒဏ်ရာ ပျောက်ကင်းသွားပြီ!");
+                let mcName = state.isLovers ? 'ပါး' : 'ကိုနေ့သစ်';
+                logMsg(`🩹 ဆေးမြစ်ပတ်တီး စည်းလိုက်သဖြင့် ${mcName} သွေးထွက်ဒဏ်ရာ ပျောက်ကင်းသွားပြီ!`);
                 advanceTime(info.timeCost, false);
             }
             else if (card.id === 'herbal_tea') {
@@ -1554,7 +1668,8 @@
                 state.sanity = Math.min(100, state.sanity + 15);
                 showFloatText('ဝမ်းပျက်/ဖျားပျောက်! +20❤️', '#81c784', px, py);
                 removeCardAmount(card.uid, 1);
-                logMsg("🍵 ဆေးဖက်ဝင်ပြုတ်ရည် သောက်လိုက်သဖြင့် ဝမ်းပျက်ခြင်းနှင့် ဖျားနာမှု ပျောက်ကင်းသွားပြီ!");
+                let mcName = state.isLovers ? 'ပါး' : 'ကိုနေ့သစ်';
+                logMsg(`🍵 ဆေးဖက်ဝင်ပြုတ်ရည် သောက်လိုက်သဖြင့် ${mcName} ဝမ်းပျက်ခြင်းနှင့် ဖျားနာမှု ပျောက်ကင်းသွားပြီ!`);
                 advanceTime(info.timeCost, false);
             }
             else if (card.id === 'shelter' || card.id === 'wooden_hut') {
@@ -1605,35 +1720,69 @@
 
             if (uid1 === uid2 && (c1.count || 1) < 2) return;
 
-            // 1. Giving Gifts / Food to Pu Pu!
+            // 1. Giving Gifts / Food to Pupu (Puu) - CHALLENGING System
             if ((c1.id === 'pupu_char' && CARD_DB[c2.id].zone === 'inv') || (c2.id === 'pupu_char' && CARD_DB[c1.id].zone === 'inv')) {
                 let item = c1.id === 'pupu_char' ? c2 : c1;
                 let affGain = 0;
                 let msg = '';
+                let pupuName = state.isLovers ? 'ပူး' : 'ပူပူး';
+                let mcName = state.isLovers ? 'ပါး' : 'ကိုနေ့သစ်';
 
-                if (item.id === 'flower_garland') {
-                    affGain = 25;
-                    msg = '🌺 ပူပူးကို မွှေးပျံ့သော ပန်းကုံးလေး ဆွဲပေးလိုက်ရာ သူမ အရမ်းပျော်ရွှင်ပြီး ရှက်သွေးဖြာသွားသည်! (+25% ချစ်ခင်မှု)';
-                } else if (item.id === 'wild_flower') {
-                    affGain = 12;
-                    msg = '🌸 ပူပူးကို တောပန်းလေး လက်ဆောင်ပေးလိုက်သည်။ (+12% ချစ်ခင်မှု)';
-                } else if (['cooked_fish','cooked_meat','cooked_shellfish','roasted_taro','open_coconut','coconut_meat','bird_egg'].includes(item.id)) {
-                    affGain = 15;
-                    msg = `🍖 ကိုနေ့သစ်က [${CARD_DB[item.id].name}] ကို ပူပူးအား ကြင်နာစွာ ခွံ့ကျွေးလိုက်သည်။ (+15% ချစ်ခင်မှု)`;
-                    if (item.id === 'open_coconut') addInvCard('coconut_shell', 1);
-                } else if (item.id === 'bandage' || item.id === 'herbal_tea') {
-                    affGain = 18;
-                    msg = `🩹 ကိုနေ့သစ်က ပူပူးကို ဂရုတစိုက် ဆေးကုသပေးလိုက်သည်။ (+18% ချစ်ခင်မှု)`;
+                // Check for healing if sick
+                if (state.pupuSick) {
+                    if (item.id === 'herbal_tea') {
+                        state.pupuSick = false;
+                        affGain = 12;
+                        msg = `🍵 <strong>${mcName}</strong> က <strong>${pupuName}</strong> ကို ဆေးဖက်ဝင်ပြုတ်ရည် တိုက်လိုက်သဖြင့် အဖျားကျကာ ပြန်လည်သက်သာသွားပါပြီ! (+၁၂% ချစ်ခင်မှု)`;
+                        removeCardAmount(item.uid, 1);
+                    } else if (item.id === 'boar_hide_coat') {
+                        state.pupuSick = false;
+                        affGain = 18;
+                        msg = `🧥 <strong>${mcName}</strong> က <strong>${pupuName}</strong> ကို နွေးထွေးသော သားရေနွေးထည် ဝတ်ပေးလိုက်သဖြင့် အအေးဒဏ်သက်သာပြီး အဖျားကျသွားပါပြီ! (+၁၈% ချစ်ခင်မှု)`;
+                        removeCardAmount(item.uid, 1);
+                    } else {
+                        SoundFX.play('hurt');
+                        logMsg(`🤕 ${pupuName} ဖျားနာနေပါသည်။ ၎င်းအား ဆေးဖက်ဝင်ပြုတ်ရည် (🍵) သို့မဟုတ် သားရေနွေးထည် (🧥) သာ ပေးပါ။`);
+                        selectedUids = [];
+                        updateUI();
+                        return;
+                    }
                 } else {
-                    SoundFX.play('hurt');
-                    logMsg(`💬 ပူပူးအား အစားအစာ၊ ဆေးဝါး သို့မဟုတ် ပန်းကုံးလေးများ လက်ဆောင်ပေးနိုင်ပါသည်။`);
-                    selectedUids = [];
-                    updateUI();
-                    return;
+                    // Normal state challenging gifts
+                    if (item.id === 'flower_garland') {
+                        affGain = 15; // Challenging crafted Garland
+                        msg = `🌺 <strong>${pupuName}</strong> ကို မွှေးပျံ့သော ပန်းကုံးလေး ဆွဲပေးလိုက်ရာ သူမ အရမ်းပျော်ရွှင်ပြီး ရှက်သွေးဖြာသွားသည်! (+၁၅% ချစ်ခင်မှု)`;
+                        removeCardAmount(item.uid, 1);
+                    } else if (item.id === 'seashell_necklace') {
+                        affGain = 20; // Hard custom gift
+                        msg = `📿 <strong>${pupuName}</strong> ကို အပင်ပန်းခံလုပ်ထားသော ခရုဆွဲကြိုးလှလှလေး ပေးလိုက်ရာ သူမ အလွန်တန်ဖိုးထားစွာ ဝတ်ဆင်လိုက်သည်။ (+၂၀% ချစ်ခင်မှု)`;
+                        removeCardAmount(item.uid, 1);
+                    } else if (item.id === 'boar_hide_coat') {
+                        affGain = 30; // Very high craft cost
+                        msg = `🧥 <strong>${pupuName}</strong> ကို ဆောင်းတွင်းအအေးဒဏ်ခံ သားရေနွေးထည်လေး ပေးလိုက်ရာ အံ့သြဝမ်းသာစွာဖြင့် ချက်ချင်းဝတ်ဆင်ကြည့်သည်။ (+၃၀% ချစ်ခင်မှု)`;
+                        removeCardAmount(item.uid, 1);
+                    } else if (item.id === 'wild_flower') {
+                        affGain = 3; // Demoted to 3% to preserve difficulty
+                        msg = `🌸 <strong>${pupuName}</strong> ကို တောပန်းလေး လက်ဆောင်ပေးလိုက်သည်။ ပန်းတစ်ပွင့်တည်းမို့ သိပ်မတက်ပါ။ (+၃% ချစ်ခင်မှု)`;
+                        removeCardAmount(item.uid, 1);
+                    } else if (['cooked_fish','cooked_meat'].includes(item.id)) {
+                        affGain = 8;
+                        msg = `🍖 <strong>${mcName}</strong> က <strong>[${CARD_DB[item.id].name}]</strong> ကို ပူးအား ချစ်ခင်စွာ ကျွေးလိုက်သည်။ (+၈% ချစ်ခင်မှု)`;
+                        removeCardAmount(item.uid, 1);
+                    } else if (['cooked_shellfish','roasted_taro','bird_egg','open_coconut','coconut_meat'].includes(item.id)) {
+                        affGain = 5;
+                        msg = `🥥 <strong>${mcName}</strong> က <strong>[${CARD_DB[item.id].name}]</strong> ကို ပူးအား ခွံ့ကျွေးလိုက်သည်။ (+၅% ချစ်ခင်မှု)`;
+                        removeCardAmount(item.uid, 1);
+                    } else {
+                        SoundFX.play('hurt');
+                        logMsg(`💬 "${pupuName}: ဒီအထုပ်ကြီးတော့ မလိုချင်ပါဘူး ပါးရယ်..." (ပန်းကုံး 🌺 ၊ ခရုဆွဲကြိုး 📿 ၊ နွေးထည် 🧥 သို့မဟုတ် ချက်ပြီးသားအစားအစာ သာ လက်ခံသည်)`);
+                        selectedUids = [];
+                        updateUI();
+                        return;
+                    }
                 }
 
                 SoundFX.play('love');
-                removeCardAmount(item.uid, 1);
                 state.affection = Math.min(100, state.affection + affGain);
                 state.sanity = Math.min(100, state.sanity + 12);
                 selectedUids = [];
@@ -1716,7 +1865,7 @@
                 state.diarrhea = false;
                 logMsg("💤 ကောင်းစွာ အိပ်စက်အနားယူလိုက်သဖြင့် ဝမ်းပျက်ခြင်း သက်သာပျောက်ကင်းသွားသည်!");
             } else {
-                logMsg(hasHut ? "💤 သစ်သားအိမ်ကြီးထဲတွင် ပူပူးနှင့်အတူ ၄ နာရီကြာ နှစ်ခြိုက်စွာ အိပ်စက်လိုက်သည်။" : "💤 ကမ်းခြေစခန်းတွင် ၄ နာရီ အိပ်စက်အနားယူလိုက်သည်။");
+                logMsg(hasHut ? "💤 သစ်သားအိမ်ကြီးထဲတွင် ပူးနှင့်အတူ ၄ နာရီကြာ နှစ်ခြိုက်စွာ အိပ်စက်လိုက်သည်။" : "💤 ကမ်းခြေစခန်းတွင် ၄ နာရီ အိပ်စက်အနားယူလိုက်သည်။");
             }
             showFloatText(`+${eGain}⚡ အိပ်စက်အနားယူ`, '#fff176');
             advanceTime(240, false);
@@ -1803,11 +1952,16 @@
             let wIcon = state.weather === 'rainy' ? '🌧️ မိုးရွာ' : (isNight ? '🌙 ညဘက်' : '☀️ နေသာ');
             document.getElementById('dayTimeDisplay').innerText = `📅 နေ့ ${state.day} - ${hrs}:${mins} (${wIcon})`;
 
+            // Mc Name & Romance Partner name tag transformation
+            let mcName = state.isLovers ? '🧑 ပါး (ကိုနေ့သစ်)' : '🧑 ကိုနေ့သစ်';
+            document.getElementById('mcNameDisplay').innerText = mcName;
+
             let badgesHtml = '';
             if (state.pupuFound) {
-                let relLabel = state.hasChildren ? '👨‍👩‍👧‍👦 မိသားစု' : (state.isLovers ? '💑 ချစ်သူ' : '💖 ပူပူး');
+                let relLabel = state.hasChildren ? '👶👶 အမွှာမိသားစု' : (state.isLovers ? '💑 ပူးနှင့်ပါး' : '💖 ပူပူး');
                 badgesHtml += `<span class="badge love">${relLabel} ${state.affection}%</span>`;
             }
+            if (state.pupuSick) badgesHtml += `<span class="badge" style="background:#e53935; animation: none;">🤒 ပူးဖျားနာနေသည်</span>`;
             if (state.bleeding) badgesHtml += `<span class="badge">🩸 သွေးထွက်ဒဏ်ရာ</span>`;
             if (state.diarrhea) badgesHtml += `<span class="badge" style="background:#ef6c00;">🤢 ဝမ်းပျက်နေသည်</span>`;
             if (state.sickness) badgesHtml += `<span class="badge" style="background:#d84315;">🤒 ဖျားနာနေသည်</span>`;
@@ -1879,8 +2033,19 @@
                 const count = c.count || 1;
 
                 let metaText = info.desc || '';
+                let labelName = info.name;
+
+                // Adjust Pupu card details for lovers
                 if (c.id === 'pupu_char') {
+                    let intimateName = state.isLovers ? 'ပူး 💖' : 'ပူပူး 💖';
+                    labelName = intimateName;
                     metaText = `ချစ်ခင်မှု: ${state.affection}% (${state.isLovers ? 'ချစ်သူ' : 'မိတ်ဆွေ'})`;
+                    if (state.pupuSick) {
+                        metaText = `🤒 ဖျားနာနေပါသည်!`;
+                    }
+                } else if (c.id === 'family_card') {
+                    labelName = `အမွှာ သားသားမီးမီး 👶👶`;
+                    metaText = `သားသားလေး နှင့် မီးမီးလေး`;
                 } else if (c.id === 'crop_plot') {
                     metaText = state.cropGrowth === 0 ? 'စိုက်ခင်းအလွတ်' : `ကြီးထွားမှု: ${Math.round(state.cropGrowth)}%`;
                 } else if (c.dur !== undefined) {
@@ -1922,7 +2087,7 @@
                     div.innerHTML = `
                         <div class="stack-badge" style="${count > 1 ? '' : 'display:none'}">×${count}</div>
                         ${dropBtnHtml}
-                        <div class="card-title">${info.name}</div>
+                        <div class="card-title">${labelName}</div>
                         <div class="card-art">${ART_SVG[c.id] || ''}</div>
                         <div class="card-meta" style="${metaText ? '' : 'display:none'}">${metaText}</div>
                         ${actionBtnHtml}
@@ -1930,6 +2095,9 @@
                     div.dataset.cardId = c.id;
                     container.appendChild(div);
                 } else {
+                    const titleEl = div.querySelector('.card-title');
+                    if (titleEl) titleEl.innerText = labelName;
+
                     const badge = div.querySelector('.stack-badge');
                     if (badge) {
                         badge.innerText = `×${count}`;
@@ -1955,13 +2123,15 @@
 
         function populateRecipeBook() {
             let container = document.getElementById('recipeListBody');
+            let mName = state.isLovers ? 'ပါး' : 'ကိုနေ့သစ်';
+            let pName = state.isLovers ? 'ပူး' : 'ပူပူး';
             let storyIntro = `<div class="recipe-item" style="border-left-color:#ec407a; background:rgba(194,24,91,0.2);">
                 <div class="mini-svg">${ART_SVG['pupu_char']}</div>
                 <div>
-                    <strong>💖 ကိုနေ့သစ် နှင့် ပူပူး ဇာတ်လမ်းလမ်းညွှန်:</strong><br>
-                    ၁။ <strong>အုန်းတောအုပ်</strong> ထဲသို့ (၂) ကြိမ် ဝင်ရှာပါက <strong>ပူပူး</strong> ကို တွေ့ရှိကယ်ဆယ်နိုင်ပါမည်။<br>
-                    ၂။ ပူပူးကို စကားပြောခြင်း၊ အစားအစာကျွေးခြင်း၊ <strong>မွှေးပျံ့သောပန်းကုံး</strong> ပေးခြင်းဖြင့် ချစ်ခင်မှု 100% ရောက်အောင် ကြိုးစားပါ။<br>
-                    ၃။ <strong>သစ်သားအိမ်ကြီး (🏡)</strong> ဆောက်လုပ်ပြီး ချစ်ခင်မှု 100% ပြည့်ပါက သားသားမီးမီးလေးများ မွေးဖွားလာပြီး <strong>ဇာတ်သိမ်းကွဲ (၂) မျိုး</strong> ရွေးချယ်နိုင်ပါမည်!
+                    <strong>💖 ${mName} နှင့် ${pName} စိန်ခေါ်မှုများသော Romance လမ်းညွှန်:</strong><br>
+                    ၁။ <strong>အုန်းတောအုပ်</strong> ထဲသို့ (၂) ကြိမ် ဝင်ရှာပါက <strong>${pName}</strong> ကို တွေ့ရှိကယ်ဆယ်နိုင်ပါမည်။<br>
+                    ၂။ ပူးကို <strong>မွှေးပျံ့သောပန်းကုံး 🌺</strong> (+15%) ၊ <strong>ခရုဆွဲကြိုး 📿</strong> (+20%) သို့မဟုတ် <strong>သားရေနွေးထည် 🧥</strong> (+30%) ပေးပြီး ချစ်ခင်မှု 100% ရောက်အောင် ကြိုးစားပါ။<br>
+                    ၃။ သစ်သားအိမ်ကြီး (🏡) ဆောက်လုပ်ပြီး ချစ်ခင်မှု 100% ပြည့်ပါက <strong>အမွှာ သားသားနှင့်မီးမီးလေးများ 👶👶</strong> မွေးဖွားလာပြီး <strong>ဇာတ်သိမ်းကွဲ (၂) မျိုး</strong> ရွေးချယ်နိုင်ပါမည်!
                 </div>
             </div>`;
             container.innerHTML = storyIntro + RECIPES.map(r => {
@@ -1978,14 +2148,14 @@
         function saveState() {
             try {
                 let raw = JSON.stringify(state);
-                localStorage.setItem('cardSurvival_NayThitPuPu_v1', raw);
-                if (tg && tg.CloudStorage) tg.CloudStorage.setItem('cardSurvival_NayThitPuPu_v1', raw);
+                localStorage.setItem('cardSurvival_NayThitPuPu_v2', raw);
+                if (tg && tg.CloudStorage) tg.CloudStorage.setItem('cardSurvival_NayThitPuPu_v2', raw);
             } catch (e) {}
         }
 
         function loadState() {
             try {
-                let raw = localStorage.getItem('cardSurvival_NayThitPuPu_v1');
+                let raw = localStorage.getItem('cardSurvival_NayThitPuPu_v2');
                 if (raw) {
                     let parsed = JSON.parse(raw);
                     if (parsed && Array.isArray(parsed.envCards) && parsed.envCards.length > 0) {
@@ -1996,7 +2166,7 @@
 
             try {
                 if (tg && tg.CloudStorage) {
-                    tg.CloudStorage.getItem('cardSurvival_NayThitPuPu_v1', (err, val) => {
+                    tg.CloudStorage.getItem('cardSurvival_NayThitPuPu_v2', (err, val) => {
                         if (!err && val) {
                             try {
                                 let p = JSON.parse(val);
@@ -2015,7 +2185,7 @@
 
         function resetGame() {
             SoundFX.play('select');
-            try { localStorage.removeItem('cardSurvival_NayThitPuPu_v1'); } catch (e) {}
+            try { localStorage.removeItem('cardSurvival_NayThitPuPu_v2'); } catch (e) {}
             state = getInitialState();
             selectedUids = [];
             document.getElementById('envZone').innerHTML = '';
